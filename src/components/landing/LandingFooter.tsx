@@ -145,7 +145,7 @@ export function LandingFooter() {
           </div>
 
           <div className="border-t border-white/10 pt-8 text-center text-sm text-gray-400">
-            <p> &copy; {CURRENT_YEAR} Todos los derechos reservados | Desarrollado por CadiTech</p>
+            <p> &copy; {CURRENT_YEAR} Todos los derechos reservados</p>
           </div>
         </div>
       </section>
