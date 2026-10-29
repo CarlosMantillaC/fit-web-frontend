@@ -4,14 +4,49 @@
 /*  Design tokens (Tailwind v4, CSS-first configuration)              */
 /* ------------------------------------------------------------------ */
 @theme {
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Oswald', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-label: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Oswald', 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
 
-  /* Tokens heredados del proyecto Laravel (landing). */
+  /* Tokens heredados de la landing. */
   --color-primary: #0a0a0a;
   --color-secondary: #151515;
   --color-tertiary: #f36100;
 
+  /* Paleta del panel (dashboard / tablet suite). */
+  --color-surface: #1a1a1a;
+  --color-surface-lowest: #0e0e0e;
+  --color-surface-low: #1c1b1b;
+  --color-surface-container: #262626;
+  --color-surface-high: #2e2e2e;
+  --color-surface-bright: #393939;
+  --color-surface-variant: #353535;
+
+  /* Contenido. */
+  --color-ink: #e5e2e1;
+  --color-ink-muted: #e2bfb0;
+  --color-outline: #a98a7d;
+
+  /* Bordes. */
+  --color-line: #333333;
+  --color-line-hover: #4d4d4d;
+  --color-line-strong: #5a4136;
+
+  /* Acento naranja. */
+  --color-accent: #ffb693;
+  --color-accent-strong: #ff6b00;
+  --color-accent-soft: #ffdbcc;
+  --color-accent-ink: #572000;
+  --color-accent-contrast: #561f00;
+
+  /* Semánticos. */
+  --color-danger: #ffb4ab;
+  --color-danger-soft: #93000a;
+  --color-warning: #ffd27a;
+  --color-success: #9ae6b4;
+
+  /* Escala de marca (compatibilidad con componentes existentes). */
   --color-brand-50: #fff7ed;
   --color-brand-100: #ffedd5;
   --color-brand-200: #fed7aa;
@@ -31,10 +66,35 @@
   html,
   body,
   #root {
-    height: 100%;
+    min-height: 100%;
   }
 
   body {
-    @apply bg-slate-950 text-slate-100 antialiased;
+    @apply bg-surface text-ink antialiased;
+    font-family: var(--font-sans);
+    overscroll-behavior: none;
+  }
+
+  ::selection {
+    background-color: var(--color-accent-strong);
+    color: var(--color-accent-contrast);
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-surface-bright);
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-line-hover);
   }
 }
