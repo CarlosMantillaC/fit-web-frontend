@@ -1,6 +1,7 @@
 import { Construction } from 'lucide-react'
 
-import { Card } from '@/components/ui/Card'
+import { EmptyState } from '@/components/ui/EmptyState'
+import { PageHeader } from '@/components/ui/PageHeader'
 
 interface PlaceholderPageProps {
   title: string
@@ -13,15 +14,13 @@ interface PlaceholderPageProps {
  */
 export function PlaceholderPage({ title, description }: PlaceholderPageProps) {
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-white">{title}</h1>
-      <Card className="flex flex-col items-center gap-3 py-14 text-center">
-        <Construction className="text-brand-500 size-10" aria-hidden />
-        <p className="text-slate-300">Módulo en construcción</p>
-        <p className="max-w-md text-sm text-slate-500">
-          {description ?? 'Esta sección se implementará próximamente.'}
-        </p>
-      </Card>
+    <div>
+      <PageHeader eyebrow="Módulo" title={title} description={description} />
+      <EmptyState
+        icon={Construction}
+        title="Módulo en construcción"
+        description={description ?? 'Esta sección se implementará próximamente.'}
+      />
     </div>
   )
 }
