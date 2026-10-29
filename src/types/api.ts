@@ -94,6 +94,17 @@ export interface Membership {
   updated_at: string
 }
 
+export interface MembershipInput {
+  member: number
+  plan: number
+  start_date: string
+  status: MembershipStatus
+}
+
+export interface MembershipUpdateInput {
+  status: MembershipStatus
+}
+
 /* ------------------------------- Payments ------------------------------- */
 
 export type PaymentMethod = 'CASH' | 'CARD' | 'TRANSFER'
@@ -109,6 +120,18 @@ export interface Payment {
   membership_details: Membership
   created_at: string
   updated_at: string
+}
+
+export interface PaymentInput {
+  membership: number
+  amount: string
+  payment_date: string
+  method: PaymentMethod
+  notes?: string
+}
+
+export interface PaymentUpdateInput {
+  notes: string
 }
 
 /* ------------------------------ Attendance ------------------------------ */
@@ -135,6 +158,35 @@ export interface Coach {
   user?: number | null
   created_at: string
   updated_at: string
+}
+
+export interface CoachInput {
+  first_name: string
+  last_name: string
+  specialty: string
+  phone?: string
+  bio?: string
+  is_active?: boolean
+}
+
+/* --------------------------------- Users -------------------------------- */
+
+export interface UserInput {
+  username: string
+  email: string
+  password: string
+  first_name: string
+  last_name: string
+  role: Role
+}
+
+export interface UserUpdateInput {
+  username: string
+  email: string
+  first_name: string
+  last_name: string
+  role: Role
+  is_active: boolean
 }
 
 /* ------------------------------- Dashboard ------------------------------ */
