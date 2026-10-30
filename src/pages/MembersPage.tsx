@@ -97,12 +97,7 @@ export function MembersPage() {
       if (!matchesStatus) return false
       if (!term) return true
 
-      const haystack = [
-        member.full_name,
-        member.email,
-        member.phone ?? '',
-        memberCode(member.id),
-      ]
+      const haystack = [member.full_name, member.email, member.phone ?? '', memberCode(member.id)]
         .join(' ')
         .toLowerCase()
 
@@ -191,8 +186,12 @@ export function MembersPage() {
         description="Gestiona altas, estados y expedientes del gimnasio."
         actions={
           <>
-            <Button variant="secondary" onClick={handleExport} disabled={filteredMembers.length === 0}>
-              <Download className="size-5 text-accent" aria-hidden />
+            <Button
+              variant="secondary"
+              onClick={handleExport}
+              disabled={filteredMembers.length === 0}
+            >
+              <Download className="text-accent size-5" aria-hidden />
               Exportar
             </Button>
             <Button onClick={openCreateModal}>
@@ -233,7 +232,7 @@ export function MembersPage() {
         />
       </section>
 
-      <section className="mb-6 rounded-xl bg-surface-container p-4 shadow-md">
+      <section className="bg-surface-container mb-6 rounded-xl p-4 shadow-md">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
           <SearchInput
             value={query}
@@ -266,7 +265,7 @@ export function MembersPage() {
               className="w-full min-w-44"
             />
 
-            <div className="flex items-center rounded-xl bg-surface-container-high p-1">
+            <div className="bg-surface-container-high flex items-center rounded-xl p-1">
               <button
                 type="button"
                 aria-label="Vista de tarjetas"
@@ -274,8 +273,8 @@ export function MembersPage() {
                 onClick={() => setView('grid')}
                 className={
                   view === 'grid'
-                    ? 'grid size-9 place-items-center rounded-lg bg-accent-strong text-accent-contrast'
-                    : 'grid size-9 place-items-center rounded-lg text-ink-muted transition-colors hover:text-ink'
+                    ? 'bg-accent-strong text-accent-contrast grid size-9 place-items-center rounded-lg'
+                    : 'text-ink-muted hover:text-ink grid size-9 place-items-center rounded-lg transition-colors'
                 }
               >
                 <LayoutGrid className="size-4" aria-hidden />
@@ -287,8 +286,8 @@ export function MembersPage() {
                 onClick={() => setView('table')}
                 className={
                   view === 'table'
-                    ? 'grid size-9 place-items-center rounded-lg bg-accent-strong text-accent-contrast'
-                    : 'grid size-9 place-items-center rounded-lg text-ink-muted transition-colors hover:text-ink'
+                    ? 'bg-accent-strong text-accent-contrast grid size-9 place-items-center rounded-lg'
+                    : 'text-ink-muted hover:text-ink grid size-9 place-items-center rounded-lg transition-colors'
                 }
               >
                 <Table2 className="size-4" aria-hidden />
