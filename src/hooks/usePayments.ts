@@ -10,7 +10,6 @@ export function usePaymentsQuery() {
   return useQuery({
     queryKey: paymentsQueryKey,
     queryFn: () => listPayments(),
-    staleTime: 30_000,
   })
 }
 
