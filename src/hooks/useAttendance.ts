@@ -28,7 +28,13 @@ export function useMemberAttendancesQuery(memberId?: number) {
 
 function useInvalidateAttendance() {
   const queryClient = useQueryClient()
-  return () => queryClient.invalidateQueries({ queryKey: attendanceKeys.all })
+
+  // El check-in/out cambia "asistencias de hoy" en el dashboard.
+  return () =>
+    Promise.all([
+      queryClient.invalidateQueries({ queryKey: attendanceKeys.all }),
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] }),
+    ])
 }
 
 export function useCheckIn() {
