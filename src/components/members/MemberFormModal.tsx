@@ -41,9 +41,10 @@ interface MemberFormModalProps {
   open: boolean
   member: Member | null
   onClose: () => void
+  onSuccess: (message: string) => void
 }
 
-export function MemberFormModal({ open, member, onClose }: MemberFormModalProps) {
+export function MemberFormModal({ open, member, onClose, onSuccess }: MemberFormModalProps) {
   const createMember = useCreateMember()
   const updateMember = useUpdateMember()
 
@@ -92,11 +93,24 @@ export function MemberFormModal({ open, member, onClose }: MemberFormModalProps)
     }
 
     if (member) {
-      updateMember.mutate({ id: member.id, input: payload }, { onSuccess: onClose })
+      updateMember.mutate(
+        { id: member.id, input: payload },
+        {
+          onSuccess: () => {
+            onSuccess(`${member.full_name} actualizado correctamente.`)
+            onClose()
+          },
+        },
+      )
       return
     }
 
-    createMember.mutate(payload, { onSuccess: onClose })
+    createMember.mutate(payload, {
+      onSuccess: () => {
+        onSuccess('Cliente añadido al directorio.')
+        onClose()
+      },
+    })
   }
 
   return (

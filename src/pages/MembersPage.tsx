@@ -16,6 +16,7 @@ import { MemberCard } from '@/components/members/MemberCard'
 import { MemberFormModal } from '@/components/members/MemberFormModal'
 import { MemberTable } from '@/components/members/MemberTable'
 import { Button } from '@/components/ui/Button'
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { FilterPills, type FilterOption } from '@/components/ui/FilterPills'
 import { PageHeader } from '@/components/ui/PageHeader'
@@ -24,8 +25,10 @@ import { SearchInput } from '@/components/ui/SearchInput'
 import { Select } from '@/components/ui/Select'
 import { Spinner } from '@/components/ui/Spinner'
 import { StatCard } from '@/components/ui/StatCard'
-import { usePageTitle } from '@/hooks/usePageTitle'
+import { Toast } from '@/components/ui/Toast'
 import { useDebounce } from '@/hooks/useDebounce'
+import { usePageTitle } from '@/hooks/usePageTitle'
+import { useToast } from '@/hooks/useToast'
 import { useDeleteMember, useMembersQuery } from '@/hooks/useMembers'
 import { downloadCsv } from '@/lib/csv'
 import { formatDate, formatNumber, isCurrentMonth, memberCode } from '@/lib/format'
@@ -57,6 +60,7 @@ export function MembersPage() {
 
   const { data: members = [], isPending, isError, error, refetch } = useMembersQuery()
   const deleteMember = useDeleteMember()
+  const { toast, showToast, clearToast } = useToast()
 
   const [searchParams] = useSearchParams()
   const [query, setQuery] = useState(() => searchParams.get('q') ?? '')
@@ -67,6 +71,7 @@ export function MembersPage() {
   const [view, setView] = useState<ViewMode>('grid')
   const [modalOpen, setModalOpen] = useState(() => searchParams.get('new') === '1')
   const [editingMember, setEditingMember] = useState<Member | null>(null)
+  const [deletingMember, setDeletingMember] = useState<Member | null>(null)
 
   const counts = useMemo(() => {
     return members.reduce(
@@ -139,10 +144,22 @@ export function MembersPage() {
   }
 
   function handleDelete(member: Member) {
-    const confirmed = window.confirm(
-      `¿Desactivar a ${member.full_name}? El historial contable se conservará.`,
-    )
-    if (confirmed) deleteMember.mutate(member.id)
+    setDeletingMember(member)
+  }
+
+  function confirmDelete() {
+    if (!deletingMember) return
+
+    deleteMember.mutate(deletingMember.id, {
+      onSuccess: () => {
+        showToast(`${deletingMember.full_name} desactivado. El historial se conserva.`)
+        setDeletingMember(null)
+      },
+      onError: (mutationError) => {
+        showToast(getApiErrorMessage(mutationError), 'error')
+        setDeletingMember(null)
+      },
+    })
   }
 
   function handleExport() {
@@ -342,7 +359,29 @@ export function MembersPage() {
         />
       )}
 
-      <MemberFormModal open={modalOpen} member={editingMember} onClose={closeModal} />
+      <MemberFormModal
+        open={modalOpen}
+        member={editingMember}
+        onClose={closeModal}
+        onSuccess={showToast}
+      />
+
+      <ConfirmDialog
+        open={deletingMember !== null}
+        title="Desactivar cliente"
+        description={
+          deletingMember
+            ? `¿Desactivar a ${deletingMember.full_name}? El historial contable se conservará.`
+            : ''
+        }
+        confirmLabel="Desactivar"
+        tone="danger"
+        isLoading={deleteMember.isPending}
+        onConfirm={confirmDelete}
+        onClose={() => setDeletingMember(null)}
+      />
+
+      <Toast message={toast?.message ?? null} variant={toast?.variant} onClose={clearToast} />
     </div>
   )
 }
