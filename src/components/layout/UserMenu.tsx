@@ -1,4 +1,4 @@
-import { ChevronDown, LogOut, User, UserRound } from 'lucide-react'
+import { ChevronDown, LogOut, Pencil, User, UserRound } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -12,9 +12,9 @@ import { cn } from '@/lib/utils'
 
 function ProfileField({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-line/70 bg-surface-container-low p-3">
-      <dt className="font-label text-[10px] tracking-wider text-ink-muted uppercase">{label}</dt>
-      <dd className="mt-0.5 truncate text-sm font-semibold text-ink">{value}</dd>
+    <div className="border-line/70 bg-surface-container-low rounded-xl border p-3">
+      <dt className="font-label text-ink-muted text-[10px] tracking-wider uppercase">{label}</dt>
+      <dd className="text-ink mt-0.5 truncate text-sm font-semibold">{value}</dd>
     </div>
   )
 }
@@ -51,6 +51,12 @@ export function UserMenu() {
     setProfileOpen(true)
   }
 
+  function handleOpenEdit() {
+    setProfileOpen(false)
+    setMenuOpen(false)
+    navigate('/app/profile')
+  }
+
   function handleLogout() {
     setMenuOpen(false)
     setProfileOpen(false)
@@ -73,25 +79,25 @@ export function UserMenu() {
         aria-controls="user-menu"
         aria-label="Abrir menú de usuario"
         className={cn(
-          'flex items-center gap-2 rounded-xl p-1 pr-2 text-left transition-colors hover:bg-surface-container focus-visible:ring-2 focus-visible:ring-accent-strong/40 focus-visible:outline-none',
+          'hover:bg-surface-container focus-visible:ring-accent-strong/40 flex items-center gap-2 rounded-xl p-1 pr-2 text-left transition-colors focus-visible:ring-2 focus-visible:outline-none',
           menuOpen && 'bg-surface-container',
         )}
       >
-        <span className="font-heading grid size-9 shrink-0 place-items-center rounded-full bg-accent text-xs font-bold text-accent-contrast">
+        <span className="font-heading bg-accent text-accent-contrast grid size-9 shrink-0 place-items-center rounded-full text-xs font-bold">
           {user ? initials : <User className="size-4" aria-hidden />}
         </span>
         <span className="hidden min-w-0 sm:block">
-          <span className="block max-w-36 truncate text-sm font-semibold text-ink">
+          <span className="text-ink block max-w-36 truncate text-sm font-semibold">
             {displayName}
           </span>
-          <span className="font-label block text-[10px] tracking-wide text-ink-muted uppercase">
+          <span className="font-label text-ink-muted block text-[10px] tracking-wide uppercase">
             {roleLabel}
           </span>
         </span>
         <ChevronDown
           className={cn(
-            'size-4 shrink-0 text-ink-muted transition-transform duration-200',
-            menuOpen && 'rotate-180 text-accent',
+            'text-ink-muted size-4 shrink-0 transition-transform duration-200',
+            menuOpen && 'text-accent rotate-180',
           )}
           aria-hidden
         />
@@ -102,15 +108,15 @@ export function UserMenu() {
           id="user-menu"
           role="menu"
           aria-label="Menú de usuario"
-          className="absolute top-full right-0 z-50 mt-2 w-72 overflow-hidden rounded-2xl border border-line bg-surface-container shadow-2xl"
+          className="border-line bg-surface-container absolute top-full right-0 z-50 mt-2 w-72 overflow-hidden rounded-2xl border shadow-2xl"
         >
-          <div className="flex items-center gap-3 border-b border-line bg-surface-container-high/40 p-4">
-            <span className="font-heading grid size-11 shrink-0 place-items-center rounded-full bg-accent text-sm font-bold text-accent-contrast">
+          <div className="border-line bg-surface-container-high/40 flex items-center gap-3 border-b p-4">
+            <span className="font-heading bg-accent text-accent-contrast grid size-11 shrink-0 place-items-center rounded-full text-sm font-bold">
               {user ? initials : <User className="size-5" aria-hidden />}
             </span>
             <div className="min-w-0">
-              <p className="truncate text-sm font-bold text-ink">{displayName}</p>
-              <p className="truncate text-xs text-ink-muted">@{user?.username ?? 'usuario'}</p>
+              <p className="text-ink truncate text-sm font-bold">{displayName}</p>
+              <p className="text-ink-muted truncate text-xs">@{user?.username ?? 'usuario'}</p>
               <Badge variant={roleBadge} className="mt-1.5">
                 {roleLabel}
               </Badge>
@@ -123,14 +129,14 @@ export function UserMenu() {
               role="menuitem"
               autoFocus
               onClick={handleOpenProfile}
-              className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm text-ink transition-colors hover:bg-surface-container-high focus-visible:bg-surface-container-high focus-visible:outline-none"
+              className="text-ink hover:bg-surface-container-high focus-visible:bg-surface-container-high flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors focus-visible:outline-none"
             >
-              <span className="grid size-8 place-items-center rounded-lg bg-surface-container-low text-accent">
+              <span className="bg-surface-container-low text-accent grid size-8 place-items-center rounded-lg">
                 <UserRound className="size-4" aria-hidden />
               </span>
               <span>
                 <span className="block font-semibold">Perfil</span>
-                <span className="block text-xs text-ink-muted">Consulta tus datos de cuenta</span>
+                <span className="text-ink-muted block text-xs">Consulta tus datos de cuenta</span>
               </span>
             </button>
 
@@ -138,14 +144,14 @@ export function UserMenu() {
               type="button"
               role="menuitem"
               onClick={handleLogout}
-              className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm text-danger transition-colors hover:bg-danger-soft/30 focus-visible:bg-danger-soft/30 focus-visible:outline-none"
+              className="text-danger hover:bg-danger-soft/30 focus-visible:bg-danger-soft/30 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors focus-visible:outline-none"
             >
-              <span className="grid size-8 place-items-center rounded-lg bg-danger-soft/30 text-danger">
+              <span className="bg-danger-soft/30 text-danger grid size-8 place-items-center rounded-lg">
                 <LogOut className="size-4" aria-hidden />
               </span>
               <span>
                 <span className="block font-semibold">Cerrar sesión</span>
-                <span className="block text-xs text-danger/70">Salir del panel</span>
+                <span className="text-danger/70 block text-xs">Salir del panel</span>
               </span>
             </button>
           </div>
@@ -160,20 +166,24 @@ export function UserMenu() {
           description="Información de tu cuenta en FitWeb."
           size="sm"
           footer={
-            <div className="flex justify-end">
+            <div className="flex justify-end gap-2">
               <Button variant="outline" onClick={() => setProfileOpen(false)}>
                 Cerrar
+              </Button>
+              <Button onClick={handleOpenEdit}>
+                <Pencil className="size-4" aria-hidden />
+                Editar perfil
               </Button>
             </div>
           }
         >
-          <div className="flex items-center gap-3 rounded-xl border border-line/70 bg-surface-container-low p-4">
-            <span className="font-heading grid size-14 shrink-0 place-items-center rounded-full bg-accent text-lg font-bold text-accent-contrast">
+          <div className="border-line/70 bg-surface-container-low flex items-center gap-3 rounded-xl border p-4">
+            <span className="font-heading bg-accent text-accent-contrast grid size-14 shrink-0 place-items-center rounded-full text-lg font-bold">
               {initials}
             </span>
             <div className="min-w-0">
-              <p className="truncate text-base font-bold text-ink">{displayName}</p>
-              <p className="truncate text-sm text-ink-muted">@{user.username}</p>
+              <p className="text-ink truncate text-base font-bold">{displayName}</p>
+              <p className="text-ink-muted truncate text-sm">@{user.username}</p>
               <Badge variant={roleBadge} className="mt-1.5">
                 {roleLabel}
               </Badge>

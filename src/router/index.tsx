@@ -6,6 +6,7 @@ import { LandingLayout } from '@/layouts/LandingLayout'
 import { AttendancePage } from '@/pages/AttendancePage'
 import { CoachesPage } from '@/pages/CoachesPage'
 import { DashboardPage } from '@/pages/DashboardPage'
+import { EditProfilePage } from '@/pages/EditProfilePage'
 import { LoginPage } from '@/pages/LoginPage'
 import { MembersPage } from '@/pages/MembersPage'
 import { MembershipsPage } from '@/pages/MembershipsPage'
@@ -47,6 +48,7 @@ export const router = createBrowserRouter([
           { path: 'attendance', element: <AttendancePage /> },
           { path: 'coaches', element: <CoachesPage /> },
           { path: 'users', element: <UsersPage /> },
+          { path: 'profile', element: <EditProfilePage /> },
         ],
       },
     ],

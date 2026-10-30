@@ -189,6 +189,18 @@ export interface UserUpdateInput {
   is_active: boolean
 }
 
+/**
+ * Datos que un usuario autenticado puede editar de su propio perfil
+ * a través de PATCH /api/auth/me/. El rol y el estado no se exponen aquí:
+ * se gestionan desde el panel de administración (PATCH /api/users/{id}/).
+ */
+export interface UpdateMeInput {
+  username: string
+  email: string
+  first_name: string
+  last_name: string
+}
+
 /* ------------------------------- Dashboard ------------------------------ */
 
 export interface DashboardStats {
