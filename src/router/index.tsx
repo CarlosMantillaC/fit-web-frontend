@@ -8,6 +8,7 @@ import { CoachesPage } from '@/pages/CoachesPage'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { EditProfilePage } from '@/pages/EditProfilePage'
 import { LoginPage } from '@/pages/LoginPage'
+import { MemberDetailPage } from '@/pages/MemberDetailPage'
 import { MembersPage } from '@/pages/MembersPage'
 import { MembershipsPage } from '@/pages/MembershipsPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
@@ -42,6 +43,7 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <DashboardPage /> },
           { path: 'members', element: <MembersPage /> },
+          { path: 'members/:id', element: <MemberDetailPage /> },
           { path: 'plans', element: <PlansPage /> },
           { path: 'memberships', element: <MembershipsPage /> },
           { path: 'payments', element: <PaymentsPage /> },

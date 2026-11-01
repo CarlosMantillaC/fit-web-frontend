@@ -1,15 +1,25 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { createMember, deleteMember, listMembers, updateMember } from '@/api/members'
+import { createMember, deleteMember, getMember, listMembers, updateMember } from '@/api/members'
 import type { MemberInput } from '@/types/api'
 
 export const membersQueryKey = ['members'] as const
+export const memberQueryKey = (id: number) => ['members', id] as const
 
 /** Lista de clientes (activos, sin soft-deleted). */
 export function useMembersQuery() {
   return useQuery({
     queryKey: membersQueryKey,
     queryFn: listMembers,
+  })
+}
+
+/** Expediente de un cliente concreto. */
+export function useMemberQuery(id?: number) {
+  return useQuery({
+    queryKey: memberQueryKey(id ?? 0),
+    queryFn: () => getMember(id as number),
+    enabled: Boolean(id),
   })
 }
 
