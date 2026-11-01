@@ -40,7 +40,7 @@ export function MemberCheckInCard({
 }: MemberCheckInCardProps) {
   const isActive = member.status === 'ACTIVE'
   const hasValidMembership = membership?.is_valid ?? false
-  const memberProfileUrl = `/app/members?q=${encodeURIComponent(member.full_name)}`
+  const memberProfileUrl = `/app/members/${member.id}`
 
   return (
     <div className="relative flex flex-col gap-4 overflow-hidden rounded-xl bg-surface-container p-4 shadow-xl">

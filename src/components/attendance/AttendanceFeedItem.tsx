@@ -25,7 +25,7 @@ export function AttendanceFeedItem({
   const member = attendance.member_details
   const isInside = !attendance.check_out
   const hasWarning = Boolean(membership && !membership.is_valid)
-  const profileUrl = `/app/members?q=${encodeURIComponent(member.full_name)}`
+  const profileUrl = `/app/members/${member.id}`
 
   return (
     <div

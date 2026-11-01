@@ -1,8 +1,8 @@
 import { BadgeCheck, Pencil, Trash2 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 import { Avatar } from '@/components/ui/Avatar'
 import { Badge } from '@/components/ui/Badge'
-import { Button } from '@/components/ui/Button'
 import { IconButton } from '@/components/ui/IconButton'
 import { formatDate, memberCode } from '@/lib/format'
 import { GENDER_LABEL, MEMBER_STATUS_BADGE, MEMBER_STATUS_LABEL } from '@/lib/members'
@@ -85,13 +85,12 @@ export function MemberCard({ member, onEdit, onDelete }: MemberCardProps) {
             onClick={() => onDelete(member)}
           />
         </div>
-        <Button
-          variant="secondary"
-          className="flex-1 sm:max-w-[200px]"
-          onClick={() => onEdit(member)}
+        <Link
+          to={`/app/members/${member.id}`}
+          className="font-label inline-flex h-11 flex-1 items-center justify-center rounded-xl border border-line bg-surface-high text-sm font-semibold text-ink transition-colors hover:bg-surface-bright sm:max-w-[200px]"
         >
           Ver expediente
-        </Button>
+        </Link>
       </div>
     </article>
   )

@@ -1,5 +1,6 @@
-import { Pencil, Trash2 } from 'lucide-react'
+import { Eye, Pencil, Trash2 } from 'lucide-react'
 import type { ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 
 import { Avatar } from '@/components/ui/Avatar'
 import { Badge } from '@/components/ui/Badge'
@@ -77,6 +78,14 @@ export function MemberTable({
       headerClassName: 'text-right',
       render: (member) => (
         <div className="flex justify-end gap-2">
+          <Link
+            to={`/app/members/${member.id}`}
+            aria-label="Ver expediente del cliente"
+            title="Ver expediente del cliente"
+            className="grid size-9 place-items-center rounded-xl bg-surface-container-low text-ink-muted transition-all hover:bg-surface-container hover:text-accent"
+          >
+            <Eye className="size-5" aria-hidden />
+          </Link>
           <IconButton
             icon={Pencil}
             label="Editar cliente"

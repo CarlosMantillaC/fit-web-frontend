@@ -50,7 +50,7 @@ export function MembershipTable({
             />
             <div className="min-w-0">
               <Link
-                to={`/app/members?q=${encodeURIComponent(member.full_name)}`}
+                to={`/app/members/${member.id}`}
                 className="block truncate font-semibold text-ink hover:text-accent"
               >
                 {member.full_name}
