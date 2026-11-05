@@ -1,4 +1,4 @@
-import { Eye, Pencil, Trash2 } from 'lucide-react'
+import { Eye, Pencil, QrCode, Trash2 } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -15,6 +15,7 @@ interface MemberTableProps {
   isLoading: boolean
   onEdit: (member: Member) => void
   onDelete: (member: Member) => void
+  onShowQr: (member: Member) => void
   emptyState?: ReactNode
 }
 
@@ -23,6 +24,7 @@ export function MemberTable({
   isLoading,
   onEdit,
   onDelete,
+  onShowQr,
   emptyState,
 }: MemberTableProps) {
   const columns: DataTableColumn<Member>[] = [
@@ -86,6 +88,12 @@ export function MemberTable({
           >
             <Eye className="size-5" aria-hidden />
           </Link>
+          <IconButton
+            icon={QrCode}
+            label="Ver QR de acceso"
+            className="size-9"
+            onClick={() => onShowQr(member)}
+          />
           <IconButton
             icon={Pencil}
             label="Editar cliente"

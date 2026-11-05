@@ -1,4 +1,4 @@
-import { BadgeCheck, Pencil, Trash2 } from 'lucide-react'
+import { BadgeCheck, Pencil, QrCode, Trash2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import { Avatar } from '@/components/ui/Avatar'
@@ -12,9 +12,10 @@ interface MemberCardProps {
   member: Member
   onEdit: (member: Member) => void
   onDelete: (member: Member) => void
+  onShowQr: (member: Member) => void
 }
 
-export function MemberCard({ member, onEdit, onDelete }: MemberCardProps) {
+export function MemberCard({ member, onEdit, onDelete, onShowQr }: MemberCardProps) {
   const isActive = member.status === 'ACTIVE'
   const avatarStatus = isActive
     ? 'online'
@@ -77,6 +78,7 @@ export function MemberCard({ member, onEdit, onDelete }: MemberCardProps) {
 
       <div className="flex items-center justify-between gap-2 pt-1">
         <div className="flex items-center gap-2">
+          <IconButton icon={QrCode} label="Ver QR de acceso" onClick={() => onShowQr(member)} />
           <IconButton icon={Pencil} label="Editar cliente" onClick={() => onEdit(member)} />
           <IconButton
             icon={Trash2}

@@ -15,6 +15,7 @@ import { getApiErrorMessage } from '@/api/client'
 import { MemberCard } from '@/components/members/MemberCard'
 import { MemberFormModal } from '@/components/members/MemberFormModal'
 import { MemberTable } from '@/components/members/MemberTable'
+import { QrCodeModal } from '@/components/qr/QrCodeModal'
 import { Button } from '@/components/ui/Button'
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { EmptyState } from '@/components/ui/EmptyState'
@@ -72,6 +73,7 @@ export function MembersPage() {
   const [modalOpen, setModalOpen] = useState(() => searchParams.get('new') === '1')
   const [editingMember, setEditingMember] = useState<Member | null>(null)
   const [deletingMember, setDeletingMember] = useState<Member | null>(null)
+  const [qrMember, setQrMember] = useState<Member | null>(null)
 
   const counts = useMemo(() => {
     return members.reduce(
@@ -335,6 +337,7 @@ export function MembersPage() {
               member={member}
               onEdit={openEditModal}
               onDelete={handleDelete}
+              onShowQr={setQrMember}
             />
           ))}
         </section>
@@ -344,6 +347,7 @@ export function MembersPage() {
           isLoading={false}
           onEdit={openEditModal}
           onDelete={handleDelete}
+          onShowQr={setQrMember}
         />
       )}
 
@@ -378,6 +382,14 @@ export function MembersPage() {
         isLoading={deleteMember.isPending}
         onConfirm={confirmDelete}
         onClose={() => setDeletingMember(null)}
+      />
+
+      <QrCodeModal
+        open={qrMember !== null}
+        onClose={() => setQrMember(null)}
+        value={qrMember?.qr_code ?? ''}
+        title={qrMember ? `QR de ${qrMember.full_name}` : 'QR de acceso'}
+        description={qrMember ? `Código de acceso ${qrMember.qr_code}` : undefined}
       />
 
       <Toast message={toast?.message ?? null} variant={toast?.variant} onClose={clearToast} />

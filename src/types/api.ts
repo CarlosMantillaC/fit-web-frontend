@@ -43,6 +43,7 @@ export interface Member {
   first_name: string
   last_name: string
   full_name: string
+  qr_code: string
   email: string
   phone?: string
   date_of_birth?: string | null

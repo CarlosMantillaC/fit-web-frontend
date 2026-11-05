@@ -11,6 +11,7 @@ import {
   Mail,
   Pencil,
   Phone,
+  QrCode,
   ReceiptText,
   Ticket,
   UserRound,
@@ -21,6 +22,7 @@ import { Link, useParams } from 'react-router-dom'
 
 import { getApiErrorMessage } from '@/api/client'
 import { MemberFormModal } from '@/components/members/MemberFormModal'
+import { QrCodeModal } from '@/components/qr/QrCodeModal'
 import { Avatar } from '@/components/ui/Avatar'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
@@ -130,6 +132,7 @@ export function MemberDetailPage() {
   const { toast, showToast, clearToast } = useToast()
   const [tab, setTab] = useState<HistoryTab>('memberships')
   const [editOpen, setEditOpen] = useState(false)
+  const [qrOpen, setQrOpen] = useState(false)
 
   usePageTitle(
     member ? `${member.full_name} · Clientes · FitWeb Pro` : 'Expediente del cliente · FitWeb Pro',
@@ -250,10 +253,16 @@ export function MemberDetailPage() {
         title={member.full_name}
         description={`${memberCode(member.id)} · ${member.email}`}
         actions={
-          <Button onClick={() => setEditOpen(true)}>
-            <Pencil className="size-5" aria-hidden />
-            Editar cliente
-          </Button>
+          <>
+            <Button variant="outline" onClick={() => setQrOpen(true)}>
+              <QrCode className="size-5" aria-hidden />
+              Ver QR
+            </Button>
+            <Button onClick={() => setEditOpen(true)}>
+              <Pencil className="size-5" aria-hidden />
+              Editar cliente
+            </Button>
+          </>
         }
       />
 
@@ -557,6 +566,14 @@ export function MemberDetailPage() {
         member={member as Member}
         onClose={() => setEditOpen(false)}
         onSuccess={showToast}
+      />
+
+      <QrCodeModal
+        open={qrOpen}
+        onClose={() => setQrOpen(false)}
+        value={member.qr_code}
+        title={`QR de ${member.full_name}`}
+        description={`Código de acceso ${member.qr_code}`}
       />
 
       <Toast message={toast?.message ?? null} variant={toast?.variant} onClose={clearToast} />
