@@ -152,6 +152,7 @@ export interface Coach {
   id: number
   first_name: string
   last_name: string
+  qr_code: string
   specialty: string
   phone?: string
   bio?: string
@@ -168,6 +169,30 @@ export interface CoachInput {
   phone?: string
   bio?: string
   is_active?: boolean
+}
+
+export interface CoachAttendance {
+  id: number
+  coach: number
+  check_in: string
+  check_out: string | null
+  duration_minutes: number | null
+  registered_by: number | null
+}
+
+export interface CoachHistorySummary {
+  total_attendances: number
+  total_minutes: number
+  currently_inside: boolean
+  open_attendance_id: number | null
+  first_attendance: string | null
+  last_attendance: string | null
+}
+
+export interface CoachHistory {
+  coach: Coach
+  summary: CoachHistorySummary
+  attendances: CoachAttendance[]
 }
 
 /* --------------------------------- Users -------------------------------- */

@@ -1,4 +1,5 @@
-import { Award, Pencil, Phone, Trash2 } from 'lucide-react'
+import { Award, History, Pencil, Phone, QrCode, Trash2 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 import { Avatar } from '@/components/ui/Avatar'
 import { Badge } from '@/components/ui/Badge'
@@ -11,9 +12,10 @@ interface CoachCardProps {
   coach: Coach
   onEdit: (coach: Coach) => void
   onDelete: (coach: Coach) => void
+  onShowQr: (coach: Coach) => void
 }
 
-export function CoachCard({ coach, onEdit, onDelete }: CoachCardProps) {
+export function CoachCard({ coach, onEdit, onDelete, onShowQr }: CoachCardProps) {
   const fullName = coachFullName(coach)
 
   return (
@@ -22,7 +24,12 @@ export function CoachCard({ coach, onEdit, onDelete }: CoachCardProps) {
         <div className="flex min-w-0 items-center gap-3">
           <Avatar name={fullName} status="online" />
           <div className="min-w-0">
-            <h3 className="font-heading truncate text-lg font-bold text-ink">{fullName}</h3>
+            <Link
+              to={`/app/coaches/${coach.id}`}
+              className="font-heading block truncate text-lg font-bold text-ink hover:text-accent"
+            >
+              {fullName}
+            </Link>
             <p className="truncate text-sm text-ink-muted">
               {coach.user ? `Usuario #${coach.user}` : 'Entrenador del equipo'}
             </p>
@@ -66,6 +73,20 @@ export function CoachCard({ coach, onEdit, onDelete }: CoachCardProps) {
       <div className="mt-auto flex items-center justify-between gap-2 border-t border-line pt-3">
         <span className="text-[11px] text-ink-muted">Actualizado {formatDate(coach.updated_at)}</span>
         <div className="flex items-center gap-2">
+          <Link
+            to={`/app/coaches/${coach.id}`}
+            aria-label="Ver historial de asistencia"
+            title="Ver historial de asistencia"
+            className="grid size-9 shrink-0 place-items-center rounded-xl bg-surface-container-low text-ink-muted transition-all hover:bg-surface-container hover:text-accent active:scale-95"
+          >
+            <History className="size-5" aria-hidden />
+          </Link>
+          <IconButton
+            icon={QrCode}
+            label="Ver QR de acceso"
+            className="size-9"
+            onClick={() => onShowQr(coach)}
+          />
           <IconButton
             icon={Pencil}
             label="Editar entrenador"

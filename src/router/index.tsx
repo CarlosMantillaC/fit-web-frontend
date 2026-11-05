@@ -4,6 +4,7 @@ import { GuestRoute, ProtectedRoute } from '@/components/ProtectedRoute'
 import { DashboardLayout } from '@/layouts/DashboardLayout'
 import { LandingLayout } from '@/layouts/LandingLayout'
 import { AttendancePage } from '@/pages/AttendancePage'
+import { CoachDetailPage } from '@/pages/CoachDetailPage'
 import { CoachesPage } from '@/pages/CoachesPage'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { EditProfilePage } from '@/pages/EditProfilePage'
@@ -49,6 +50,7 @@ export const router = createBrowserRouter([
           { path: 'payments', element: <PaymentsPage /> },
           { path: 'attendance', element: <AttendancePage /> },
           { path: 'coaches', element: <CoachesPage /> },
+          { path: 'coaches/:id', element: <CoachDetailPage /> },
           { path: 'users', element: <UsersPage /> },
           { path: 'profile', element: <EditProfilePage /> },
         ],

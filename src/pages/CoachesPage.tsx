@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import { getApiErrorMessage } from '@/api/client'
 import { CoachCard } from '@/components/coaches/CoachCard'
 import { CoachFormModal } from '@/components/coaches/CoachFormModal'
+import { QrCodeModal } from '@/components/qr/QrCodeModal'
 import { Button } from '@/components/ui/Button'
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { EmptyState } from '@/components/ui/EmptyState'
@@ -57,6 +58,7 @@ export function CoachesPage() {
   const [modalOpen, setModalOpen] = useState(false)
   const [editingCoach, setEditingCoach] = useState<Coach | null>(null)
   const [deletingCoach, setDeletingCoach] = useState<Coach | null>(null)
+  const [qrCoach, setQrCoach] = useState<Coach | null>(null)
 
   const specialties = useMemo(
     () =>
@@ -247,6 +249,7 @@ export function CoachesPage() {
               coach={coach}
               onEdit={openEditModal}
               onDelete={setDeletingCoach}
+              onShowQr={setQrCoach}
             />
           ))}
         </section>
@@ -283,6 +286,14 @@ export function CoachesPage() {
         isLoading={deleteCoach.isPending}
         onConfirm={confirmDelete}
         onClose={() => setDeletingCoach(null)}
+      />
+
+      <QrCodeModal
+        open={qrCoach !== null}
+        onClose={() => setQrCoach(null)}
+        value={qrCoach?.qr_code ?? ''}
+        title={qrCoach ? `QR de ${coachFullName(qrCoach)}` : 'QR de acceso'}
+        description={qrCoach ? `Código de acceso ${qrCoach.qr_code}` : undefined}
       />
 
       <Toast
