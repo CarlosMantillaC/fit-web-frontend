@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { checkIn, checkOut, listAttendances } from '@/api/attendance'
+import { checkIn, checkOut, listAttendances, scanQr } from '@/api/attendance'
 
 export const attendanceKeys = {
   all: ['attendance'] as const,
@@ -52,5 +52,20 @@ export function useCheckOut() {
   return useMutation({
     mutationFn: (attendanceId: number) => checkOut(attendanceId),
     onSuccess: () => invalidate(),
+  })
+}
+
+/** Escaneo de QR: registra entrada o salida de cliente/entrenador. */
+export function useScanQr() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (code: string) => scanQr(code),
+    onSuccess: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: attendanceKeys.all }),
+        queryClient.invalidateQueries({ queryKey: ['dashboard'] }),
+        queryClient.invalidateQueries({ queryKey: ['coaches'] }),
+      ]),
   })
 }

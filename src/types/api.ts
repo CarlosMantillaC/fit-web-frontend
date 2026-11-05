@@ -195,6 +195,28 @@ export interface CoachHistory {
   attendances: CoachAttendance[]
 }
 
+/* ---------------------------------- Scan --------------------------------- */
+
+export type ScanAction = 'check-in' | 'check-out'
+
+export type ScanResult =
+  | {
+      type: 'member'
+      action: ScanAction
+      qr_code: string
+      person: Member
+      attendance: Attendance
+      message: string
+    }
+  | {
+      type: 'coach'
+      action: ScanAction
+      qr_code: string
+      person: Coach
+      attendance: CoachAttendance
+      message: string
+    }
+
 /* --------------------------------- Users -------------------------------- */
 
 export interface UserInput {

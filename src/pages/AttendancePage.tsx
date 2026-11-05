@@ -4,7 +4,6 @@ import {
   QrCode,
   Radio,
   RefreshCw,
-  ScanLine,
   UserSearch,
 } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
@@ -13,6 +12,8 @@ import { getApiErrorMessage } from '@/api/client'
 import { AttendanceFeedItem } from '@/components/attendance/AttendanceFeedItem'
 import { MemberCheckInCard } from '@/components/attendance/MemberCheckInCard'
 import { OccupancyCard } from '@/components/attendance/OccupancyCard'
+import { QrScannerModal } from '@/components/attendance/QrScannerModal'
+import { ScanResultCard } from '@/components/attendance/ScanResultCard'
 import { Button } from '@/components/ui/Button'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { FilterPills, type FilterOption } from '@/components/ui/FilterPills'
@@ -26,6 +27,7 @@ import {
   useCheckIn,
   useCheckOut,
   useMemberAttendancesQuery,
+  useScanQr,
 } from '@/hooks/useAttendance'
 import { useClock } from '@/hooks/useClock'
 import { useMembersQuery } from '@/hooks/useMembers'
@@ -35,7 +37,7 @@ import { downloadCsv } from '@/lib/csv'
 import { formatDateTime, formatNumber, memberCode, todayIsoDate } from '@/lib/format'
 import { pickLatestMemberships } from '@/lib/memberships'
 import { cn } from '@/lib/utils'
-import type { Attendance, Member } from '@/types/api'
+import type { Attendance, Member, ScanResult } from '@/types/api'
 
 type FeedFilter = 'all' | 'inside' | 'finished'
 
@@ -67,12 +69,14 @@ export function AttendancePage() {
   const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null)
   const [feedFilter, setFeedFilter] = useState<FeedFilter>('all')
   const [scannerOpen, setScannerOpen] = useState(false)
+  const [lastScan, setLastScan] = useState<ScanResult | null>(null)
   const [toast, setToast] = useState<ToastState | null>(null)
 
   const { data: memberAttendances = [] } = useMemberAttendancesQuery(selectedMemberId ?? undefined)
 
   const checkInMutation = useCheckIn()
   const checkOutMutation = useCheckOut()
+  const scanMutation = useScanQr()
 
   useEffect(() => {
     if (!toast) return
@@ -152,6 +156,22 @@ export function AttendancePage() {
     })
   }
 
+  function handleScan(code: string) {
+    setScannerOpen(false)
+    scanMutation.mutate(code, {
+      onSuccess: (result) => {
+        setLastScan(result)
+        notify(result.message)
+        if (result.type === 'member') {
+          setSelectedMemberId(result.person.id)
+          setSearch(result.person.full_name)
+          setSearchOpen(false)
+        }
+      },
+      onError: (mutationError) => notify(getApiErrorMessage(mutationError), 'error'),
+    })
+  }
+
   function handleExport() {
     downloadCsv(
       `asistencias-${today}.csv`,
@@ -223,7 +243,7 @@ export function AttendancePage() {
                 type="button"
                 aria-label="Escanear QR"
                 title="Escanear QR"
-                onClick={() => setScannerOpen((value) => !value)}
+                onClick={() => setScannerOpen(true)}
                 className={cn(
                   'grid size-12 shrink-0 place-items-center rounded-lg transition-all',
                   scannerOpen
@@ -234,24 +254,6 @@ export function AttendancePage() {
                 <QrCode className="size-6" aria-hidden />
               </button>
             </div>
-
-            {scannerOpen && (
-              <div className="overflow-hidden rounded-lg bg-surface-container-lowest p-2">
-                <div className="relative flex h-36 flex-col items-center justify-center overflow-hidden rounded bg-surface-container-high px-4 text-center">
-                  <div className="absolute inset-x-8 top-1/2 h-0.5 -translate-y-1/2 animate-pulse bg-accent-strong shadow-[0_0_8px_#ff6b00]" />
-                  <ScanLine className="size-12 text-ink-muted/40" aria-hidden />
-                  <span className="mt-2 text-[11px] font-bold tracking-wider text-ink-muted uppercase">
-                    Escáner QR no conectado
-                  </span>
-                  <span className="mt-1 text-xs text-ink-muted/80">
-                    Busca al cliente por nombre o código FIT-XXXX.
-                  </span>
-                  <span className="absolute top-2 right-2 rounded bg-surface-lowest/80 px-2 py-0.5 text-[10px] font-semibold text-accent">
-                    DEMO
-                  </span>
-                </div>
-              </div>
-            )}
 
             {searchOpen && search.trim().length > 0 && (
               <div className="flex flex-col gap-1 rounded-lg bg-surface-container-low p-1">
@@ -282,6 +284,8 @@ export function AttendancePage() {
               </div>
             )}
           </div>
+
+          {lastScan && <ScanResultCard result={lastScan} />}
 
           {selectedMember ? (
             <MemberCheckInCard
@@ -386,6 +390,14 @@ export function AttendancePage() {
           </div>
         </section>
       </div>
+
+      {scannerOpen && (
+        <QrScannerModal
+          open
+          onClose={() => setScannerOpen(false)}
+          onDetected={handleScan}
+        />
+      )}
 
       <Toast
         message={toast?.message ?? null}
