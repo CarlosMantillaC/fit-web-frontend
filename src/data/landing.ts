@@ -119,12 +119,6 @@ export interface GalleryImage {
 
 export const galleryImages: GalleryImage[] = [
   {
-    src: '/img/gallery/gallery-9.jpg',
-    alt: 'Instalaciones modernas',
-    title: 'Instalaciones modernas',
-    wide: true,
-  },
-  {
     src: '/img/gallery/gallery-2.jpg',
     alt: 'Tecnología avanzada',
     title: 'Tecnología avanzada',
@@ -135,20 +129,9 @@ export const galleryImages: GalleryImage[] = [
     title: 'Entrenamiento personalizado',
   },
   {
-    src: '/img/gallery/gallery-4.jpg',
-    alt: 'Comunidad fitness',
-    title: 'Comunidad fitness',
-  },
-  {
-    src: '/img/gallery/gallery-5.jpg',
-    alt: 'Equipo profesional',
-    title: 'Equipo profesional',
-  },
-  {
     src: '/img/gallery/gallery-6.jpg',
     alt: 'Resultados comprobados',
     title: 'Resultados comprobados',
-    wide: true,
   },
 ]
 
