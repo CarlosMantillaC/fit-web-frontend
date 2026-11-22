@@ -118,8 +118,8 @@ export function CoachDetailPage() {
   const coach = history?.coach
   usePageTitle(
     coach
-      ? `${coachFullName(coach)} · Entrenadores · FitWeb Pro`
-      : 'Historial del entrenador · FitWeb Pro',
+      ? `${coachFullName(coach)} · Entrenadores · FitWeb`
+      : 'Historial del entrenador · FitWeb',
     'Historial de asistencia y entradas/salidas del entrenador.',
   )
 

@@ -152,7 +152,7 @@ function DashboardStat({
 }
 
 export function DashboardPage() {
-  usePageTitle('Dashboard · FitWeb Pro', 'Resumen operativo del gimnasio.')
+  usePageTitle('Dashboard · FitWeb', 'Resumen operativo del gimnasio.')
 
   const navigate = useNavigate()
   const { user } = useAuth()

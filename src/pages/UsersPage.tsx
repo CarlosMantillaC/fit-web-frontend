@@ -52,7 +52,7 @@ function sortUsers(users: User[], sort: SortKey): User[] {
 }
 
 export function UsersPage() {
-  usePageTitle('Usuarios · FitWeb Pro', 'Cuentas y permisos del personal del gimnasio.')
+  usePageTitle('Usuarios · FitWeb', 'Cuentas y permisos del personal del gimnasio.')
 
   const { user: currentUser, setUser } = useAuth()
   const isAdmin = currentUser?.role === 'ADMIN'

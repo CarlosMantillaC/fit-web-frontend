@@ -2,7 +2,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import {
   ArrowLeft,
-  Dumbbell,
   Eye,
   EyeOff,
   LockKeyhole,
@@ -79,9 +78,7 @@ export function LoginPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/65 to-black/20" />
               <div className="relative flex h-full flex-col justify-between p-8">
                 <Link to="/" className="flex items-center gap-2.5" aria-label="FitWeb — Inicio">
-                  <span className="grid size-10 place-items-center rounded-xl bg-accent-strong text-accent-contrast">
-                    <Dumbbell className="size-5" aria-hidden />
-                  </span>
+                  <img src="/img/logotipo.png" alt="" className="size-10 rounded-xl" />
                   <span className="font-display text-2xl font-bold tracking-wide text-white uppercase">
                     FitWeb
                   </span>
@@ -111,9 +108,7 @@ export function LoginPage() {
 
             <div className="flex flex-col justify-center p-6 sm:p-10">
               <div className="mb-8 flex items-center gap-2.5 lg:hidden">
-                <span className="grid size-10 place-items-center rounded-xl bg-accent-strong text-accent-contrast">
-                  <Dumbbell className="size-5" aria-hidden />
-                </span>
+                <img src="/img/logotipo.png" alt="" className="size-10 rounded-xl" />
                 <span className="font-display text-2xl font-bold tracking-wide text-ink uppercase">
                   FitWeb
                 </span>

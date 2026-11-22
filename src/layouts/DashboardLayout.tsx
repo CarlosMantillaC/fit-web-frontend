@@ -45,9 +45,11 @@ export function DashboardLayout() {
     <div className="bg-surface min-h-screen">
       <aside className="bg-surface-low fixed top-0 left-0 z-50 flex h-full w-20 flex-col items-center py-4 select-none md:w-28">
         <div className="mb-5 flex flex-col items-center gap-1">
-          <div className="bg-accent-strong text-accent-contrast grid size-10 place-items-center rounded-xl shadow-[0_2px_10px_rgba(255,107,0,0.3)]">
-            <Dumbbell className="size-6" aria-hidden />
-          </div>
+          <img
+            src="/img/logotipo.png"
+            alt="FitWeb"
+            className="size-10 rounded-xl shadow-[0_2px_10px_rgba(255,107,0,0.3)]"
+          />
           <span className="font-label text-accent text-[10px] font-bold tracking-wider uppercase">
             FitWeb
           </span>

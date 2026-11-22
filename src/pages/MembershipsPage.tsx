@@ -62,7 +62,7 @@ function sortMemberships(memberships: Membership[], sort: SortKey): Membership[]
 }
 
 export function MembershipsPage() {
-  usePageTitle('Membresías · FitWeb Pro', 'Altas, vigencias y renovaciones de clientes.')
+  usePageTitle('Membresías · FitWeb', 'Altas, vigencias y renovaciones de clientes.')
 
   const { data: memberships = [], isPending, isError, error, refetch } = useMembershipsQuery()
   const { toast, showToast, clearToast } = useToast()

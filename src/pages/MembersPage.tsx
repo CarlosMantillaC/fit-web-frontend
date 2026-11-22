@@ -57,7 +57,7 @@ function sortMembers(members: Member[], sort: SortKey): Member[] {
 }
 
 export function MembersPage() {
-  usePageTitle('Clientes · FitWeb Pro', 'Directorio de clientes del gimnasio.')
+  usePageTitle('Clientes · FitWeb', 'Directorio de clientes del gimnasio.')
 
   const { data: members = [], isPending, isError, error, refetch } = useMembersQuery()
   const deleteMember = useDeleteMember()

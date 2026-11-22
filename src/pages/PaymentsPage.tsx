@@ -63,7 +63,7 @@ function sortPayments(payments: Payment[], sort: SortKey): Payment[] {
 }
 
 export function PaymentsPage() {
-  usePageTitle('Pagos · FitWeb Pro', 'Cobros, métodos de pago e ingresos del gimnasio.')
+  usePageTitle('Pagos · FitWeb', 'Cobros, métodos de pago e ingresos del gimnasio.')
 
   const { data: payments = [], isPending, isError, error, refetch } = usePaymentsQuery()
   const { toast, showToast, clearToast } = useToast()

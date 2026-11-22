@@ -47,7 +47,7 @@ interface ToastState {
 }
 
 export function AttendancePage() {
-  usePageTitle('Asistencia · FitWeb Pro', 'Registro de entrada y salida de clientes.')
+  usePageTitle('Asistencia · FitWeb', 'Registro de entrada y salida de clientes.')
 
   const clock = useClock()
   const today = todayIsoDate()

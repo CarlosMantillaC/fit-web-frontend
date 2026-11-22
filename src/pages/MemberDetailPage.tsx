@@ -135,7 +135,7 @@ export function MemberDetailPage() {
   const [qrOpen, setQrOpen] = useState(false)
 
   usePageTitle(
-    member ? `${member.full_name} · Clientes · FitWeb Pro` : 'Expediente del cliente · FitWeb Pro',
+    member ? `${member.full_name} · Clientes · FitWeb` : 'Expediente del cliente · FitWeb',
     'Estado del cliente e historial de membresías, pagos y asistencias.',
   )
 

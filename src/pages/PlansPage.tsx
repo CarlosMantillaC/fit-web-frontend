@@ -55,7 +55,7 @@ function sortPlans(plans: Plan[], sort: SortKey): Plan[] {
 }
 
 export function PlansPage() {
-  usePageTitle('Planes · FitWeb Pro', 'Catálogo de planes y tarifas del gimnasio.')
+  usePageTitle('Planes · FitWeb', 'Catálogo de planes y tarifas del gimnasio.')
 
   const { user } = useAuth()
   const canManage = user?.role === 'ADMIN'

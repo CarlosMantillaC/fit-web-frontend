@@ -44,7 +44,7 @@ function sortCoaches(coaches: Coach[], sort: SortKey): Coach[] {
 }
 
 export function CoachesPage() {
-  usePageTitle('Entrenadores · FitWeb Pro', 'Equipo técnico y especialidades del gimnasio.')
+  usePageTitle('Entrenadores · FitWeb', 'Equipo técnico y especialidades del gimnasio.')
 
   const { data: coaches = [], isPending, isError, error, refetch } = useCoachesQuery()
   const deleteCoach = useDeleteCoach()

@@ -13,7 +13,7 @@ import { getInitials } from '@/lib/format'
 import { ROLE_BADGE, userDisplayName, userRoleLabel } from '@/lib/users'
 
 export function EditProfilePage() {
-  usePageTitle('Mi perfil · FitWeb Pro', 'Edita los datos personales de tu cuenta.')
+  usePageTitle('Mi perfil · FitWeb', 'Edita los datos personales de tu cuenta.')
 
   const { user, setUser } = useAuth()
   const navigate = useNavigate()
